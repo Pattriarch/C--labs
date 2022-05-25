@@ -1,0 +1,43 @@
+@using Web.Data.Models
+@inject NavigationManager _navigationManager
+
+<h1>Издатели</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Описание</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (excursions != null)
+    {
+        @foreach (var excursion in excursions)
+        {
+            <tr  @onclick="()=>toItem(excursion)">
+                <td>@excursion.Id</td>
+                <td>@excursion.Name</td>
+                <td>@excursion.Description</td>
+                <td>@excursion.Price</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public string PublisherId { get; set; }
+    public List<Publisher> Publishers { get; set; }
+    public Data.Models.Publisher? CurrentPublisher { get; set; }
+    [Inject]
+    private IPublisherProvider publishersProvider { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        CurrentPublisher = await publishersProvider.GetOne(Int32.Parse(PublisherId));
+        Publishers = await publishersProvider.GetAll();
+        Console.WriteLine(CurrentPublisher);
+        base.OnInitialized();
+    }
+}
