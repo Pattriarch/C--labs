@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Web.Data.Models;
 
+namespace Blazor.Services;
 
 public class PublishersProvider : IPublishersProvider
 {

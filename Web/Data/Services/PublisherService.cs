@@ -19,10 +19,7 @@ public class PublisherService
         {
             Name = publisher.Name,
         };
-        if (publisher.Books.Any())
-        {
-            npublisher.Books  = _context.Books.ToList().IntersectBy(publisher.Books, book => book.Id).ToList();
-        }
+
         var result = _context.Publishers.Add(npublisher);
         await _context.SaveChangesAsync();
         return await Task.FromResult(result.Entity);

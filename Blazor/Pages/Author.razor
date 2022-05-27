@@ -1,0 +1,68 @@
+@page "/Author/{AuthorId}"
+@using Blazor.Services
+
+<h3>Информация об авторе</h3>
+@if (CurrentAuthor != null)
+{
+    <div class="authorBlock">
+        <div class="field">
+            <label class="label">Идентификатор</label> <input class="form-control valueField" type="text" value="@CurrentAuthor.Id" aria-label="Disabled input example" disabled readonly>
+        </div>
+        <div class="field">
+            <label class="label">Имя</label> <input class="form-control valueField" type="text" value="@CurrentAuthor.Name" aria-label="Disabled input example" disabled readonly>
+        </div>
+        <div class="field">
+            <label class="label">Описание</label> <input class="form-control valueField" type="text" value="@CurrentAuthor.Description" aria-label="Disabled input example" disabled readonly>
+        </div>
+    </div>
+    <h3>Книги</h3>
+    <table class="table">
+        <thead>
+        <th >Название</th>
+        <th >Описание</th>
+        <th >Артикул</th>
+        <th>Название категории</th>
+        <th>Название издателя</th>
+        <th>Авторы</th>
+        </thead>
+        <tbody>
+        @foreach (var art in CurrentAuthor.Books)
+        {
+            <tr >
+                <td>@art.Name</td>
+                <td>@art.Description</td>
+                <td>@art.Article</td>
+                <td>@art.Category.Name</td>
+                <td>@art.Publisher.Name</td>
+                <td>
+                    <div class="artAuthors">
+                        @foreach (var artAuthor in art.Authors)
+                        {
+                            if (artAuthor.Books.Any(x => x.Id == art.Id))
+                            {
+                                <span class="authorTag">@artAuthor.Name</span>
+                            }
+                        }
+                    </div >
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public string AuthorId { get; set; }
+    public List<Web.Data.Models.Author> Authors { get; set; }
+    public Web.Data.Models.Author? CurrentAuthor { get; set; }
+    [Inject]
+    private Services.IAuthorsProvider authorsProvider { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        CurrentAuthor = await authorsProvider.GetOne(Int32.Parse(AuthorId));
+        Authors = await authorsProvider.GetAll();
+        Console.WriteLine(CurrentAuthor);
+        base.OnInitialized();
+    }
+}

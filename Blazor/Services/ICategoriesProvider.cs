@@ -1,5 +1,7 @@
 ﻿using Web.Data.Models;
 
+namespace Blazor.Services;
+
 public interface ICategoriesProvider
 {
     Task<List<Category>> GetAll();

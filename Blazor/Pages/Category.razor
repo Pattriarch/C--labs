@@ -1,0 +1,65 @@
+@page "/Category/{CategoryId}"
+@using Blazor.Services
+
+<h3>Информация о категории</h3>
+@if (CurrentCategory != null)
+{
+    <div class="categoryBlock">
+        <div class="field">
+            <label class="label">Идентификатор</label> <input class="form-control valueField" type="text" value="@CurrentCategory.Id" aria-label="Disabled input example" disabled readonly>
+        </div>
+        <div class="field">
+            <label class="label">Имя</label> <input class="form-control valueField" type="text" value="@CurrentCategory.Name" aria-label="Disabled input example" disabled readonly>
+        </div>
+    </div>
+    <h3>Книги</h3>
+    <table class="table">
+        <thead>
+        <th >Название</th>
+        <th >Описание</th>
+        <th >Артикул</th>
+        <th>Название категории</th>
+        <th>Название издателя</th>
+        <th>Авторы</th>
+        </thead>
+        <tbody>
+        @foreach (var art in CurrentCategory.Books)
+        {
+            <tr >
+                <td>@art.Name</td>
+                <td>@art.Description</td>
+                <td>@art.Article</td>
+                <td>@art.Category.Name</td>
+                <td>@art.Publisher.Name</td>
+                <td>
+                    <div class="artCategorys">
+                        @foreach (var artCategory in art.Authors)
+                        {
+                            if (artCategory.Books.Any(x => x.Id == art.Id))
+                            {
+                                <span class="categoryTag">@artCategory.Name</span>
+                            }
+                        }
+                    </div >
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public string CategoryId { get; set; }
+    public List<Web.Data.Models.Category> Categorys { get; set; }
+    public Web.Data.Models.Category? CurrentCategory { get; set; }
+    [Inject]
+    private Services.ICategoriesProvider categorysProvider { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        CurrentCategory = await categorysProvider.GetOne(Int32.Parse(CategoryId));
+        Categorys = await categorysProvider.GetAll();
+        Console.WriteLine(CurrentCategory);
+        base.OnInitialized();
+    }
+}

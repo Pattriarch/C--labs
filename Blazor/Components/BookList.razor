@@ -1,0 +1,47 @@
+@using Web.Data.Models
+@inject NavigationManager _navigationManager
+@page "/Books"
+
+<h1>Книги</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Название</th>
+        <th>Описание</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Books != null)
+    {
+        @foreach (var book in Books)
+        {
+            <tr  @onclick="()=>toItem(book)">
+                <td>@book.Id</td>
+                <td>@book.Name</td>
+                <td>@book.Description</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public string BookId { get; set; }
+    public List<Book> Books { get; set; }
+    public Web.Data.Models.Book? CurrentBook { get; set; }
+    [Inject]
+    private Services.IBooksProvider booksProvider { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        CurrentBook = await booksProvider.GetOne(Int32.Parse(BookId));
+        Books = await booksProvider.GetAll();
+        Console.WriteLine(CurrentBook);
+        base.OnInitialized();
+    }
+    public void toItem(Book book)
+    {
+        _navigationManager.NavigateTo($"/Book/{book.Id}");
+    }
+}

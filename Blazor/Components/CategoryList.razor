@@ -1,0 +1,45 @@
+@using Web.Data.Models
+@inject NavigationManager _navigationManager
+@page "/Categories"
+
+<h1>Категории</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Название</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Categories != null)
+    {
+        @foreach (var category in Categories)
+        {
+            <tr  @onclick="()=>toItem(category)">
+                <td>@category.Id</td>
+                <td>@category.Name</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public string CategoryId { get; set; }
+    public List<Category> Categories { get; set; }
+    public Web.Data.Models.Category? CurrentCategory { get; set; }
+    [Inject]
+    private Services.ICategoriesProvider categoriesProvider { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        CurrentCategory = await categoriesProvider.GetOne(Int32.Parse(CategoryId));
+        Categories = await categoriesProvider.GetAll();
+        Console.WriteLine(CurrentCategory);
+        base.OnInitialized();
+    }
+    public void toItem(Category category)
+    {
+        _navigationManager.NavigateTo($"/Category/{category.Id}");
+    }
+}

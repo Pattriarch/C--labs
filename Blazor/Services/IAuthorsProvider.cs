@@ -2,7 +2,7 @@
 
 namespace Blazor.Services;
 
-public interface IAuthorProvider
+public interface IAuthorsProvider
 {
     Task<List<Author>> GetAll();
     Task<Author?> GetOne(int id);

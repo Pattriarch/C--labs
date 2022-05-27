@@ -1,0 +1,47 @@
+@using Web.Data.Models
+@inject NavigationManager _navigationManager
+@page "/Authors"
+
+<h1>Авторы</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Название</th>
+        <th>Описание</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Authors != null)
+    {
+        @foreach (var author in Authors)
+        {
+            <tr  @onclick="()=>toItem(author)">
+                <td>@author.Id</td>
+                <td>@author.Name</td>
+                <td>@author.Description</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public string AuthorId { get; set; }
+    public List<Author> Authors { get; set; }
+    public Web.Data.Models.Author? CurrentAuthor { get; set; }
+    [Inject]
+    private Services.IAuthorsProvider authorsProvider { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        CurrentAuthor = await authorsProvider.GetOne(Int32.Parse(AuthorId));
+        Authors = await authorsProvider.GetAll();
+        Console.WriteLine(CurrentAuthor);
+        base.OnInitialized();
+    }
+    public void toItem(Author author)
+    {
+        _navigationManager.NavigateTo($"/Author/{author.Id}");
+    }
+}

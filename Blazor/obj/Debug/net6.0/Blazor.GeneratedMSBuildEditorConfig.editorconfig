@@ -38,16 +38,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQdWJsaXNoZXJMaXN0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Daniil/RiderProjects/Daniil/Web/Blazor/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+[C:/Users/Daniil/RiderProjects/Daniil/Web/Blazor/Pages/Author.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aG9yLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Daniil/RiderProjects/Daniil/Web/Blazor/Pages/FetchData.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
+[C:/Users/Daniil/RiderProjects/Daniil/Web/Blazor/Pages/Book.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQm9vay5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Daniil/RiderProjects/Daniil/Web/Blazor/Pages/Category.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcnkucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Daniil/RiderProjects/Daniil/Web/Blazor/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Daniil/RiderProjects/Daniil/Web/Blazor/Pages/Publisher.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHVibGlzaGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Daniil/RiderProjects/Daniil/Web/Blazor/Shared/SurveyPrompt.razor]

@@ -2,10 +2,12 @@
 using Newtonsoft.Json;
 using Web.Data.Models;
 
-public class CategoryProvider : ICategoriesProvider
+namespace Blazor.Services;
+
+public class CategoriesProvider : ICategoriesProvider
 {
     private HttpClient _client;
-    public CategoryProvider(HttpClient client)
+    public CategoriesProvider(HttpClient client)
     {
         _client = client;
     }

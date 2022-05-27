@@ -4,10 +4,10 @@ using Web.Data.Models;
 
 namespace Blazor.Services;
 
-public class AuthorProvider
+public class AuthorsProvider : IAuthorsProvider
 {
     private HttpClient _client;
-    public AuthorProvider(HttpClient client)
+    public AuthorsProvider(HttpClient client)
     {
         _client = client;
     }

@@ -20,10 +20,6 @@ public class AuthorService
             Name = author.Name,
             Description = author.Description,
         };
-        if (author.Books.Any())
-        {
-            nauthor.Books  = _context.Books.ToList().IntersectBy(author.Books, book => book.Id).ToList();
-        }
         var result = _context.Authors.Add(nauthor);
         await _context.SaveChangesAsync();
         return await Task.FromResult(result.Entity);

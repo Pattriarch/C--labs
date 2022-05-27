@@ -813,3 +813,7 @@ C:\Users\Daniil\RiderProjects\Daniil\Web\Blazor\obj\Debug\net6.0\Blazor.dll
 C:\Users\Daniil\RiderProjects\Daniil\Web\Blazor\obj\Debug\net6.0\refint\Blazor.dll
 C:\Users\Daniil\RiderProjects\Daniil\Web\Blazor\obj\Debug\net6.0\Blazor.pdb
 C:\Users\Daniil\RiderProjects\Daniil\Web\Blazor\obj\Debug\net6.0\ref\Blazor.dll
+C:\Users\Daniil\RiderProjects\Daniil\Web\Blazor\bin\Debug\net6.0\wwwroot\_framework\Newtonsoft.Json.dll
+C:\Users\Daniil\RiderProjects\Daniil\Web\Blazor\bin\Debug\net6.0\wwwroot\_framework\Newtonsoft.Json.dll.gz
+C:\Users\Daniil\RiderProjects\Daniil\Web\Blazor\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Daniil\RiderProjects\Daniil\Web\Blazor\obj\Debug\net6.0\build-gz\iWOM54Yw.gz

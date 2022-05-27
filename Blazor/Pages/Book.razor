@@ -1,0 +1,90 @@
+@page "/Book/{BookId}"
+@using Blazor.Services
+
+<h3>Информация о книге</h3>
+@if (CurrentBook != null)
+{
+    <div class="bookBlock">
+        <div class="field">
+            <label class="label">Идентификатор</label> <input class="form-control valueField" type="text" value="@CurrentBook.Id" aria-label="Disabled input example" disabled readonly>
+        </div>
+        <div class="field">
+            <label class="label">Имя</label> <input class="form-control valueField" type="text" value="@CurrentBook.Name" aria-label="Disabled input example" disabled readonly>
+        </div>
+        <div class="field">
+            <label class="label">Описание</label> <input class="form-control valueField" type="text" value="@CurrentBook.Description" aria-label="Disabled input example" disabled readonly>
+        </div>
+        <div class="field">
+            <label class="label">Артикул</label> <input class="form-control valueField" type="text" value="@CurrentBook.Article" aria-label="Disabled input example" disabled readonly>
+        </div>
+    </div>
+    
+    <h3>Категория</h3>
+    <table class="table">
+        <thead>
+        <th >Название</th>
+        </thead>
+        <tbody>
+        <tr >
+            <td>@CurrentBook.Category.Name</td>
+        </tr>
+        </tbody>
+    </table>
+    
+    <h3>Издатель</h3>
+    <table class="table">
+        <thead>
+        <th >Название</th>
+        </thead>
+        <tbody>
+        <tr >
+            <td>@CurrentBook.Publisher.Name</td>
+        </tr>
+        </tbody>
+    </table>
+    
+    <h3>Авторы</h3>
+    <table class="table">
+        <thead>
+        <th >Имя</th>
+        <th >Описание</th>
+        <th>Книги</th>
+        </thead>
+        <tbody>
+        @foreach (var art in CurrentBook.Authors)
+        {
+            <tr >
+                <td>@art.Name</td>
+                <td>@art.Description</td>
+                <td>
+                    <div class="artBooks">
+                        @foreach (var artBook in Books)
+                        {
+                            if (artBook.Authors.Any(x => x.Id == art.Id))
+                            {
+                                <span class="bookTag">@artBook.Name</span>
+                            }
+                        }
+                    </div >
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public string BookId { get; set; }
+    public List<Web.Data.Models.Book> Books { get; set; }
+    public Web.Data.Models.Book? CurrentBook { get; set; }
+    [Inject]
+    private Services.IBooksProvider booksProvider { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        CurrentBook = await booksProvider.GetOne(Int32.Parse(BookId));
+        Books = await booksProvider.GetAll();
+        Console.WriteLine(CurrentBook);
+        base.OnInitialized();
+    }
+}

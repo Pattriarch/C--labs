@@ -1,25 +1,23 @@
 @using Web.Data.Models
 @inject NavigationManager _navigationManager
+@page "/Publishers"
 
 <h1>Издатели</h1>
 <table class="table">
     <thead>
     <tr>
         <th>ID</th>
-        <th>Имя</th>
-        <th>Описание</th>
+        <th>Название</th>
     </tr>
     </thead>
     <tbody>
-    @if (excursions != null)
+    @if (Publishers != null)
     {
-        @foreach (var excursion in excursions)
+        @foreach (var publisher in Publishers)
         {
-            <tr  @onclick="()=>toItem(excursion)">
-                <td>@excursion.Id</td>
-                <td>@excursion.Name</td>
-                <td>@excursion.Description</td>
-                <td>@excursion.Price</td>
+            <tr  @onclick="()=>toItem(publisher)">
+                <td>@publisher.Id</td>
+                <td>@publisher.Name</td>
             </tr>
         }
     }
@@ -30,14 +28,18 @@
     [Parameter]
     public string PublisherId { get; set; }
     public List<Publisher> Publishers { get; set; }
-    public Data.Models.Publisher? CurrentPublisher { get; set; }
+    public Web.Data.Models.Publisher? CurrentPublisher { get; set; }
     [Inject]
-    private IPublisherProvider publishersProvider { get; set; }
+    private Services.IPublishersProvider publishersProvider { get; set; }
     protected async override Task OnInitializedAsync()
     {
         CurrentPublisher = await publishersProvider.GetOne(Int32.Parse(PublisherId));
         Publishers = await publishersProvider.GetAll();
         Console.WriteLine(CurrentPublisher);
         base.OnInitialized();
+    }
+    public void toItem(Publisher publisher)
+    {
+        _navigationManager.NavigateTo($"/Publisher/{publisher.Id}");
     }
 }

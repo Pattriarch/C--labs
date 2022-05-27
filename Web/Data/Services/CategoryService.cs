@@ -19,10 +19,7 @@ public class CategoryService
         {
             Name = category.Name,
         };
-        if (category.Books.Any())
-        {
-            ncategory.Books  = _context.Books.ToList().IntersectBy(category.Books, book => book.Id).ToList();
-        }
+
         var result = _context.Categories.Add(ncategory);
         await _context.SaveChangesAsync();
         return await Task.FromResult(result.Entity);

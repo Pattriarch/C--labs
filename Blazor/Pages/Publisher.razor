@@ -1,0 +1,65 @@
+@page "/Publisher/{PublisherId}"
+@using Blazor.Services
+
+<h3>Информация об издателе</h3>
+@if (CurrentPublisher != null)
+{
+    <div class="publisherBlock">
+        <div class="field">
+            <label class="label">Идентификатор</label> <input class="form-control valueField" type="text" value="@CurrentPublisher.Id" aria-label="Disabled input example" disabled readonly>
+        </div>
+        <div class="field">
+            <label class="label">Имя</label> <input class="form-control valueField" type="text" value="@CurrentPublisher.Name" aria-label="Disabled input example" disabled readonly>
+        </div>
+    </div>
+    <h3>Книги</h3>
+    <table class="table">
+        <thead>
+        <th >Название</th>
+        <th >Описание</th>
+        <th >Артикул</th>
+        <th>Название категории</th>
+        <th>Название издателя</th>
+        <th>Авторы</th>
+        </thead>
+        <tbody>
+        @foreach (var art in CurrentPublisher.Books)
+        {
+            <tr >
+                <td>@art.Name</td>
+                <td>@art.Description</td>
+                <td>@art.Article</td>
+                <td>@art.Category.Name</td>
+                <td>@art.Publisher.Name</td>
+                <td>
+                    <div class="artPublishers">
+                        @foreach (var artPublisher in art.Authors)
+                        {
+                            if (artPublisher.Books.Any(x => x.Id == art.Id))
+                            {
+                                <span class="publisherTag">@artPublisher.Name</span>
+                            }
+                        }
+                    </div >
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public string PublisherId { get; set; }
+    public List<Web.Data.Models.Publisher> Publishers { get; set; }
+    public Web.Data.Models.Publisher? CurrentPublisher { get; set; }
+    [Inject]
+    private Services.IPublishersProvider publishersProvider { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        CurrentPublisher = await publishersProvider.GetOne(Int32.Parse(PublisherId));
+        Publishers = await publishersProvider.GetAll();
+        Console.WriteLine(CurrentPublisher);
+        base.OnInitialized();
+    }
+}
